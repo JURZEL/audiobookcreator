@@ -63,9 +63,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
     // Prüfe Python libdiscid (für korrekte Disc-ID Berechnung)
     try {
+      // Versuche beide Import-Varianten (native discid oder libdiscid.compat)
       final result = await Process.run('python3', [
         '-c',
-        'import discid; print(discid.__version__)'
+        '''try:
+    import discid
+    print(discid.__version__)
+except ImportError:
+    from libdiscid.compat import discid
+    print(discid.__version__)'''
       ]);
       if (result.exitCode == 0) {
         final version = result.stdout.toString().trim();
@@ -598,8 +604,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       };
     } else if (toolLower == 'python libdiscid') {
       return {
-        'Ubuntu/Debian': 'sudo apt-get install python3-discid',
-        'Fedora/RHEL': 'sudo dnf install python3-discid',
+        'Ubuntu/Debian': 'sudo apt-get install python3-libdiscid',
+        'Fedora/RHEL': 'sudo dnf install python3-libdiscid',
         'Arch Linux': 'sudo pacman -S python-discid',
       };
     } else if (toolLower == 'eject') {

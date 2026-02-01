@@ -128,8 +128,9 @@ class CDService {
 
       // Priorität 1: Python libdiscid (beste Quelle, ignoriert Data-Tracks korrekt)
       try {
+        // Versuche beide Import-Varianten (native discid oder libdiscid.compat)
         final result = await _shell.run(
-          'python3 -c \'import discid; disc = discid.read("$device"); print(disc.toc_string)\'',
+          'python3 -c \'try:\n    import discid\nexcept ImportError:\n    from libdiscid.compat import discid\ndisc = discid.read("$device"); print(disc.toc_string)\'',
         );
         if (result.isNotEmpty) {
           final output = result.first.stdout.toString().trim();

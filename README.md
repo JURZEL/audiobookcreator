@@ -69,14 +69,15 @@ Ein elegantes, modernes Flutter-Frontend für cdparanoia zum Rippen und Konverti
 - Flutter 3.10.7 oder höher
 - cdparanoia
 - ffmpeg
-- cd-discid (optional, für CD-Identifikation)
+- python3-libdiscid (empfohlen, für korrekte MusicBrainz Disc-ID)
+- cd-discid (optional, Fallback für CD-Identifikation)
 
 ### Installation der Abhängigkeiten
 
 #### Ubuntu/Debian:
 ```bash
 sudo apt-get update
-sudo apt-get install cdparanoia ffmpeg cd-discid
+sudo apt-get install cdparanoia ffmpeg python3-libdiscid cd-discid
 ```
 
 #### Fedora/RHEL:
@@ -92,6 +93,12 @@ sudo dnf install cdparanoia ffmpeg cd-discid
 ```bash
 sudo pacman -S cdparanoia ffmpeg libcdio
 ```
+
+**Hinweis zu Python-Paketen:**
+Die App unterstützt automatisch verschiedene Python discid-Implementierungen:
+- Debian/Ubuntu: `python3-libdiscid` (verwendet libdiscid.compat Layer)
+- Fedora/RHEL: `python3-libdiscid`
+- Arch: `python-discid` (natives discid Modul)
 
 ## Installation
 
